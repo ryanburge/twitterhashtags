@@ -12,9 +12,9 @@ accessURL=accessURL, authURL=authURL)
 my_oauth$handshake(cainfo = system.file("CurlSSL", "cacert.pem", package = "RCurl"))
 save(my_oauth, file="backup/oauth_token.Rdata")
 save(my_oauth, file="oauth_token.Rdata")
-accessToken = '??'
-accessSecret = '??'
-library(twitteR)
+accessToken = '14851168-3ePk0sagpEJZzOWUa9RYFBv2AwhPl6mlvX9LirqgO'
+accessSecret = '4WBb5FzvsDGNKTEtTxc5GsQIva2BLjk7ZpuAskQrtZ6oP'
+
 setup_twitter_oauth(consumer_key=consumerKey, consumer_secret=consumerSecret,
 access_token=accessToken, access_secret=accessSecret)
 
