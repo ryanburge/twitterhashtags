@@ -1,0 +1,35 @@
+library(twitteR)
+setwd("D:/")
+library(ROAuth)
+requestURL <- "https://api.twitter.com/oauth/request_token"
+accessURL <- "https://api.twitter.com/oauth/access_token"
+authURL <- "https://api.twitter.com/oauth/authorize"
+consumerKey <- "8kb0nStdvvCvweN8Qvf9yUPaJ"
+consumerSecret <- "kx470OqsATIQarO1GYY3MLUjrnG74J722pP3kAu4t2G70f6si9"
+my_oauth <- OAuthFactory$new(consumerKey=consumerKey,
+                             consumerSecret=consumerSecret, requestURL=requestURL,
+                             accessURL=accessURL, authURL=authURL)
+my_oauth$handshake(cainfo = system.file("CurlSSL", "cacert.pem", package = "RCurl"))
+save(my_oauth, file="backup/oauth_token.Rdata")
+save(my_oauth, file="oauth_token.Rdata")
+accessToken = '14851168-3ePk0sagpEJZzOWUa9RYFBv2AwhPl6mlvX9LirqgO'
+accessSecret = '4WBb5FzvsDGNKTEtTxc5GsQIva2BLjk7ZpuAskQrtZ6oP'
+
+setup_twitter_oauth(consumer_key=consumerKey, consumer_secret=consumerSecret,
+                    access_token=accessToken, access_secret=accessSecret)
+
+
+tweets <- searchTwitter("#FundEIU", n=5000)
+tweets <- twListToDF(tweets)
+
+minutes <- 120
+ggplot(data=tweets, aes(x=created)) +
+  geom_histogram(aes(fill=..count..), binwidth=160*minutes) +
+  scale_x_datetime("Date") +
+  scale_y_continuous("Frequency") + ggtitle("Usage of the #FundEIU Hashtag")
+
+
+count <- count(tweets, screenName)
+count  %>% arrange(count, desc(n))
+count <- filter(count, n >1)
+ggplot(count, aes(x=reorder(screenName, n), y = n)) + geom_bar(stat="identity") + coord_flip()
