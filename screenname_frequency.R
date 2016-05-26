@@ -1,6 +1,15 @@
 library(twitteR)
-setwd("D:/")
 library(ROAuth)
+library(tm)
+library(stringr)
+library(wordcloud)
+library(syuzhet)
+library(lubridate)
+library(ggplot2)
+library(scales)
+library(reshape2)
+library(dplyr)
+
 requestURL <- "https://api.twitter.com/oauth/request_token"
 accessURL <- "https://api.twitter.com/oauth/access_token"
 authURL <- "https://api.twitter.com/oauth/authorize"
@@ -22,7 +31,7 @@ setup_twitter_oauth(consumer_key=consumerKey, consumer_secret=consumerSecret,
 tweets <- searchTwitter("#FundEIU", n=5000)
 tweets <- twListToDF(tweets)
 
-minutes <- 120
+minutes <- 240
 ggplot(data=tweets, aes(x=created)) +
   geom_histogram(aes(fill=..count..), binwidth=160*minutes) +
   scale_x_datetime("Date") +
